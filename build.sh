@@ -3,7 +3,8 @@
 #set -e
 
 ## Copy this script inside the kernel directory
-KERNEL_DEFCONFIG=cust_defconfig
+KERNEL_DEFCONFIG=net_defconfig
+#KERNEL_DEFCONFIG=cust_defconfig
 ANYKERNEL3_DIR=$PWD/AnyKernel3/
 FINAL_KERNEL_ZIP=Spectrum_AOSP-miatoll-$(date '+%Y%m%d').zip
 export PATH="$HOME/proton/bin:$PATH"
@@ -39,6 +40,8 @@ echo -e "$blue***********************************************"
 echo "          BUILDING KERNEL          "
 echo -e "***********************************************$nocol"
 make $KERNEL_DEFCONFIG O=out
+make menuconfig O=out
+cp out/.config ~/net_defconfig
 make -j$(nproc --all) O=out \
                       ARCH=arm64 \
                       CC=clang \
